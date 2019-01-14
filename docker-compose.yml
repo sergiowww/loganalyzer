@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  elasticsearch:
+    build: elasticsearch/
+    image: loganalyzer/elasticsearch:6.5.4
+    expose:
+      - "9200"
+      - "9300"
+    ports:
+      - "9201:9200"
+  logstash:
+    build: logstash/
+    image: loganalyzer/logstash:6.5.4
+    depends_on:
+      - elasticsearch
+    expose:
+      - "5044"
+
+  filebeats:
+    build: filebeats/
+    image: loganalyzer/filebeats:6.5.4
+    depends_on:
+      - logstash
+    volumes:
+      - ./sample_data/server.log:/var/log/server.log
+
+networks:
+  default:
+    driver: bridge
