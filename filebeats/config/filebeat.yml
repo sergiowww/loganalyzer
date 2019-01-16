@@ -6,6 +6,7 @@ filebeat.inputs:
   fields:
     type: server-log
   fields_under_root: true
+  include_lines: ["^.*?org.springframework.scheduling.quartz.SchedulerFactoryBean"]
 
 output.logstash: 
   hosts: ["logstash:5044"]

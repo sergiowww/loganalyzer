@@ -1,6 +1,14 @@
 version: '2'
 
 services:
+  kibana:
+    build: kibana/
+    image: loganalyzer/kibana:6.5.4
+    ports:
+      - "80:5601"
+    depends_on:
+      - elasticsearch
+
   elasticsearch:
     build: elasticsearch/
     image: loganalyzer/elasticsearch:6.5.4
@@ -9,6 +17,7 @@ services:
       - "9300"
     ports:
       - "9201:9200"
+
   logstash:
     build: logstash/
     image: loganalyzer/logstash:6.5.4
